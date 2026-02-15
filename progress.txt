@@ -12,9 +12,13 @@ Workspace: /Users/myassistant/Documents/projects/ultimate-dashboard
 
 ## Completed Stories
 - [x] story-01: Project Initialization [2026-02-14]
+- [x] story-02: Core Dashboard Layout & Navigation [2026-02-14]
 
 ## Current Status
 - Initialized with Next.js, TS, Tailwind.
 - Configured to run on port 4444.
-- Basic landing page implemented.
-- Vitest configured.
+- Master Layout implemented with Sidebar, Header, and responsive content area.
+- Sidebar includes placeholders for Dashboard, Antfarm, Chat, Terminal, and Settings.
+- Quick Actions (Gateway Restart) added to Sidebar.
+- Tests implemented for Layout components.
+- All tests passing.

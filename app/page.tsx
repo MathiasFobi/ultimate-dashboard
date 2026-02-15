@@ -1,4 +1,5 @@
 import React from 'react';
+import HealthWidget from '../components/HealthWidget';
 
 export default function Home() {
   return (
@@ -9,14 +10,8 @@ export default function Home() {
       </div>
 
       <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-        {/* Status Card */}
-        <div className="rounded-xl border border-zinc-200 bg-white p-6 shadow-sm dark:border-zinc-800 dark:bg-zinc-900">
-          <h3 className="text-sm font-medium uppercase tracking-wider text-zinc-500 dark:text-zinc-400">System Status</h3>
-          <div className="mt-4 flex items-center gap-3">
-            <div className="h-3 w-3 rounded-full bg-green-500 animate-pulse"></div>
-            <span className="text-2xl font-semibold tracking-tight">Running Live</span>
-          </div>
-        </div>
+        {/* System Health Widget */}
+        <HealthWidget />
 
         {/* Messaging Card */}
         <div className="rounded-xl border border-zinc-200 bg-white p-6 shadow-sm dark:border-zinc-800 dark:bg-zinc-900">
