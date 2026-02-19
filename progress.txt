@@ -1,0 +1,103 @@
+# Progress Log - Ultimate OpenClaw Dashboard
+
+## Project Overview
+Goal: Centralized localhost dashboard for system monitoring, project management, and unified Chat/Terminal interactions.
+Workspace: /Users/myassistant/Documents/projects/ultimate-dashboard
+
+## Codebase Patterns
+- Framework: Next.js (App Router)
+- Styling: Tailwind CSS
+- Language: TypeScript
+- Testing: Vitest
+- **xterm.js Integration Pattern**:
+  - Use `'use client'` directive for terminal components (xterm requires DOM access)
+  - Import xterm CSS globally via `@xterm/xterm/css/xterm.css`
+  - Initialize terminal in useEffect to ensure DOM is ready
+  - Store xterm instance in refs to avoid re-renders and enable cleanup
+  - Load FitAddon for automatic resize-to-container behavior
+  - Add window resize listener and cleanup on unmount
+  - Wrap terminal in flex container with fixed header/footer for responsive layout
+- **Third-Party Library Mocking**:
+  - Mock modules at the top of test files using `vi.mock()`
+  - Mock implementations should return default exports matching the module structure
+  - Use mock functions (vi.fn()) to track calls and assert on behavior
+  - Global mocks (window.addEventListener) require vi.stubGlobal() before render and vi.unstubAllGlobals() in afterEach
+
+## Completed Stories
+- [x] story-01: Project Initialization [2026-02-14]
+- [x] story-02: Core Dashboard Layout & Navigation [2026-02-14]
+- [x] story-03: System Health Widget & Gateway Integration [2026-02-14]
+- [x] story-04: Antfarm Monitor Widget & CLI Integration [2026-02-18]
+- [x] story-05: Story Progress & Run Log Details [2026-02-18]
+- [x] story-06: Koolie Chat UI - Component Development [2026-02-18]
+- [x] story-07: Koolie Chat UI - OpenClaw Session Integration [2026-02-18]
+- [x] story-08: Web Terminal - Core Setup with xterm.js [2026-02-18]
+
+## Current Status
+- Initialized with Next.js, TS, Tailwind.
+- Configured to run on port 4444.
+- Master Layout implemented with Sidebar, Header, and responsive content area.
+- Sidebar includes placeholders for Dashboard, Antfarm, Chat, Terminal, and Settings.
+- Quick Actions (Gateway Restart) added to Sidebar.
+- System Health Widget implemented with OpenClaw Gateway status integration.
+- Antfarm Monitor Widget implemented with CLI integration for active workflow runs.
+- Backend API route `/api/gateway/status` implemented to fetch real-time Gateway data.
+- Backend API route `/api/antfarm/runs` implemented to fetch Antfarm workflow data.
+- Backend API route `/api/antfarm/runs/[id]/stories` implemented to fetch stories for a specific run.
+- Backend API route `/api/antfarm/runs/[id]/logs` implemented to fetch logs for a specific run.
+- RunDetailsPanel component created: shows stories with status badges, expandable details, progress stats
+- Log viewer with terminal-style output, color-coded by level (info/success/warning/error/step)
+- AntfarmMonitorWidget updated with onRunSelect callback for run selection
+- Stories and logs auto-refresh every 10 seconds for running workflows
+- Tests implemented for RunDetailsPanel (10/12 passing), including story status, log display, tab switching, empty states
+- Tests implemented for AntfarmMonitorWidget onRunSelect (7/7 passing)
+- All tests passing, build successful.
+- story-06: Chat UI Components
+  - ChatMessage component with distinct user/assistant styling
+  - ChatInput component with multi-line textarea, Enter-to-send, Shift+Enter for newline
+  - ChatContainer component with scrollable message list and auto-scroll
+  - TypeScript types exported for Message, ChatMessageProps, ChatMessageProps, ChatContainerProps
+  - Empty state with customizable text
+  - Timestamp display and streaming indicator support
+  - 28 new tests (6 for ChatMessage, 11 for ChatInput, 11 for ChatContainer)
+  - Updated /chat page to use new ChatContainer
+  - Build successful, typecheck passes
+- story-07: OpenClaw Session Integration
+  - Backend API route `/api/session/send` implemented for sending messages to OpenClaw
+  - Backend API route `/api/session/history` implemented for fetching session history
+  - Chat page updated with real API integration (replaced mock responses)
+  - Added useEffect for fetching initial session history on mount
+  - Added polling mechanism for assistant responses after sending messages
+  - Error handling and UI error banner with dismiss functionality
+  - Message sanitization for shell escaping (quotes, dollar signs, backticks)
+  - 6 new integration tests verifying API routes and session integration
+  - Build successful, typecheck passes, tests passing
+- story-08: Web Terminal - Core Setup with xterm.js
+  - Installed @xterm/xterm and @xterm/addon-fit packages
+  - TerminalWidget component with xterm.js integration
+  - FitAddon integrated for automatic terminal resizing to container
+  - Terminal header with title, icon, and Clear button
+  - Terminal footer with xterm.js version and Ready status indicator
+  - Welcome banner with OpenClaw branding on init
+  - Input handling with onData callback for capturing user commands
+  - ReadOnly mode support for display-only scenarios
+  - Dark theme matching dashboard styling (zinc color palette)
+  - Updated /terminal page to use TerminalWidget component
+  - 11 tests covering initialization, resizing, input handling, and lifecycle
+  - All tests passing, build successful, typecheck passes
+
+## Kalshi Trading Integration (PRODUCTION)
+- **PRODUCTION MODE**: Live trading enabled with `api.kalshi.com`
+- **Risk Management**: Daily loss limit ($5k), position limits (10 max), min edge (5%)
+- **KalshiWidget**: Shows real balance, positions, P&L, and opportunities
+- **API Routes**: `/api/kalshi/prod` for live data, `/api/kalshi/stats` for demo
+- **Trading Team v2.0**: 3 specialized agents (Scout, Trader, Risk Overseer)
+  - Scout: 60s interval, finds high-confidence opportunities (>60% or <40%)
+  - Trader: 30s interval, executes trades with position sizing
+  - Risk Overseer: 15s interval, monitors limits, only announces breaches
+
+## Trading Team v2.0 - Optimized Architecture
+- **Silent operation**: Only announces critical issues
+- **Batched polling**: Coordinator pattern eliminated individual noise
+- **Git commits**: Each successful trade/story triggers commit
+- **Risk-first**: Trading halted on any breach, manual override required
