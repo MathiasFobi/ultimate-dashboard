@@ -14,6 +14,7 @@ Workspace: /Users/myassistant/Documents/projects/ultimate-dashboard
 - [x] story-01: Project Initialization [2026-02-14]
 - [x] story-02: Core Dashboard Layout & Navigation [2026-02-14]
 - [x] story-03: System Health Widget & Gateway Integration [2026-02-14]
+- [x] story-04: Antfarm Monitor Widget & CLI Integration [2026-02-18]
 
 ## Current Status
 - Initialized with Next.js, TS, Tailwind.
@@ -22,7 +23,9 @@ Workspace: /Users/myassistant/Documents/projects/ultimate-dashboard
 - Sidebar includes placeholders for Dashboard, Antfarm, Chat, Terminal, and Settings.
 - Quick Actions (Gateway Restart) added to Sidebar.
 - System Health Widget implemented with OpenClaw Gateway status integration.
+- Antfarm Monitor Widget implemented with CLI integration for active workflow runs.
 - Backend API route `/api/gateway/status` implemented to fetch real-time Gateway data.
+- Backend API route `/api/antfarm/runs` implemented to fetch Antfarm workflow data.
 - Tests implemented for all components, including mocked API calls.
 - All tests passing, build successful.
 
