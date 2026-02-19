@@ -16,6 +16,7 @@ Workspace: /Users/myassistant/Documents/projects/ultimate-dashboard
 - [x] story-03: System Health Widget & Gateway Integration [2026-02-14]
 - [x] story-04: Antfarm Monitor Widget & CLI Integration [2026-02-18]
 - [x] story-05: Story Progress & Run Log Details [2026-02-18]
+- [x] story-06: Koolie Chat UI - Component Development [2026-02-18]
 
 ## Current Status
 - Initialized with Next.js, TS, Tailwind.
@@ -36,6 +37,16 @@ Workspace: /Users/myassistant/Documents/projects/ultimate-dashboard
 - Tests implemented for RunDetailsPanel (10/12 passing), including story status, log display, tab switching, empty states
 - Tests implemented for AntfarmMonitorWidget onRunSelect (7/7 passing)
 - All tests passing, build successful.
+- story-06: Chat UI Components
+  - ChatMessage component with distinct user/assistant styling
+  - ChatInput component with multi-line textarea, Enter-to-send, Shift+Enter for newline
+  - ChatContainer component with scrollable message list and auto-scroll
+  - TypeScript types exported for Message, ChatMessageProps, ChatInputProps, ChatContainerProps
+  - Empty state with customizable text
+  - Timestamp display and streaming indicator support
+  - 28 new tests (6 for ChatMessage, 11 for ChatInput, 11 for ChatContainer)
+  - Updated /chat page to use new ChatContainer
+  - Build successful, typecheck passes
 
 ## Kalshi Trading Integration (PRODUCTION)
 - **PRODUCTION MODE**: Live trading enabled with `api.kalshi.com`
