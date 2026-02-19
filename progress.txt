@@ -9,6 +9,19 @@ Workspace: /Users/myassistant/Documents/projects/ultimate-dashboard
 - Styling: Tailwind CSS
 - Language: TypeScript
 - Testing: Vitest
+- **xterm.js Integration Pattern**:
+  - Use `'use client'` directive for terminal components (xterm requires DOM access)
+  - Import xterm CSS globally via `@xterm/xterm/css/xterm.css`
+  - Initialize terminal in useEffect to ensure DOM is ready
+  - Store xterm instance in refs to avoid re-renders and enable cleanup
+  - Load FitAddon for automatic resize-to-container behavior
+  - Add window resize listener and cleanup on unmount
+  - Wrap terminal in flex container with fixed header/footer for responsive layout
+- **Third-Party Library Mocking**:
+  - Mock modules at the top of test files using `vi.mock()`
+  - Mock implementations should return default exports matching the module structure
+  - Use mock functions (vi.fn()) to track calls and assert on behavior
+  - Global mocks (window.addEventListener) require vi.stubGlobal() before render and vi.unstubAllGlobals() in afterEach
 
 ## Completed Stories
 - [x] story-01: Project Initialization [2026-02-14]
@@ -18,6 +31,7 @@ Workspace: /Users/myassistant/Documents/projects/ultimate-dashboard
 - [x] story-05: Story Progress & Run Log Details [2026-02-18]
 - [x] story-06: Koolie Chat UI - Component Development [2026-02-18]
 - [x] story-07: Koolie Chat UI - OpenClaw Session Integration [2026-02-18]
+- [x] story-08: Web Terminal - Core Setup with xterm.js [2026-02-18]
 
 ## Current Status
 - Initialized with Next.js, TS, Tailwind.
@@ -42,7 +56,7 @@ Workspace: /Users/myassistant/Documents/projects/ultimate-dashboard
   - ChatMessage component with distinct user/assistant styling
   - ChatInput component with multi-line textarea, Enter-to-send, Shift+Enter for newline
   - ChatContainer component with scrollable message list and auto-scroll
-  - TypeScript types exported for Message, ChatMessageProps, ChatInputProps, ChatContainerProps
+  - TypeScript types exported for Message, ChatMessageProps, ChatMessageProps, ChatContainerProps
   - Empty state with customizable text
   - Timestamp display and streaming indicator support
   - 28 new tests (6 for ChatMessage, 11 for ChatInput, 11 for ChatContainer)
@@ -58,6 +72,19 @@ Workspace: /Users/myassistant/Documents/projects/ultimate-dashboard
   - Message sanitization for shell escaping (quotes, dollar signs, backticks)
   - 6 new integration tests verifying API routes and session integration
   - Build successful, typecheck passes, tests passing
+- story-08: Web Terminal - Core Setup with xterm.js
+  - Installed @xterm/xterm and @xterm/addon-fit packages
+  - TerminalWidget component with xterm.js integration
+  - FitAddon integrated for automatic terminal resizing to container
+  - Terminal header with title, icon, and Clear button
+  - Terminal footer with xterm.js version and Ready status indicator
+  - Welcome banner with OpenClaw branding on init
+  - Input handling with onData callback for capturing user commands
+  - ReadOnly mode support for display-only scenarios
+  - Dark theme matching dashboard styling (zinc color palette)
+  - Updated /terminal page to use TerminalWidget component
+  - 11 tests covering initialization, resizing, input handling, and lifecycle
+  - All tests passing, build successful, typecheck passes
 
 ## Kalshi Trading Integration (PRODUCTION)
 - **PRODUCTION MODE**: Live trading enabled with `api.kalshi.com`
