@@ -10,6 +10,7 @@ vi.mock('lucide-react', () => ({
   Clock: () => <div data-testid="icon-clock" />,
   PlayCircle: () => <div data-testid="icon-play" />,
   XCircle: () => <div data-testid="icon-x" />,
+  ChevronRight: () => <div data-testid="icon-chevron" />,
 }));
 
 // Mock next/link
@@ -124,5 +125,70 @@ describe('AntfarmMonitorWidget', () => {
     fireEvent.click(refreshButton);
 
     await waitFor(() => expect(fetch).toHaveBeenCalledTimes(2), { timeout: 2000 });
+  });
+
+  test('calls onRunSelect when run is clicked', async () => {
+    const mockRun = {
+      id: 'abc123',
+      status: 'running',
+      workflowType: 'feature-dev',
+      taskTitle: 'Build new feature',
+    };
+
+    const mockData = {
+      runs: [mockRun],
+      activeCount: 1,
+      completedCount: 0,
+    };
+
+    const handleRunSelect = vi.fn();
+
+    // @ts-ignore
+    fetch.mockResolvedValue({
+      ok: true,
+      json: () => Promise.resolve(mockData),
+    });
+
+    render(<AntfarmMonitorWidget onRunSelect={handleRunSelect} />);
+
+    await waitFor(() => {
+      expect(screen.getByText('Build new feature')).toBeTruthy();
+    }, { timeout: 2000 });
+
+    const runButton = screen.getByText('Build new feature');
+    fireEvent.click(runButton);
+
+    expect(handleRunSelect).toHaveBeenCalledWith(mockRun);
+  });
+
+  test('does not break when onRunSelect is not provided', async () => {
+    const mockData = {
+      runs: [
+        {
+          id: 'abc123',
+          status: 'running',
+          workflowType: 'feature-dev',
+          taskTitle: 'Build new feature',
+        },
+      ],
+      activeCount: 1,
+      completedCount: 0,
+    };
+
+    // @ts-ignore
+    fetch.mockResolvedValue({
+      ok: true,
+      json: () => Promise.resolve(mockData),
+    });
+
+    render(<AntfarmMonitorWidget />);
+
+    await waitFor(() => {
+      expect(screen.getByText('Build new feature')).toBeTruthy();
+    }, { timeout: 2000 });
+
+    // Clicking should not throw error even without onRunSelect
+    const runButton = screen.getByText('Build new feature');
+    expect(() => fireEvent.click(runButton)).not.toThrow();
   });
 });

@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react';
 import { Activity, CheckCircle, Clock, PlayCircle, XCircle } from 'lucide-react';
 import Link from 'next/link';
 
-interface WorkflowRun {
+export interface WorkflowRun {
   id: string;
   status: 'running' | 'completed' | 'failed';
   workflowType: string;
@@ -17,7 +17,11 @@ interface AntfarmStatus {
   completedCount: number;
 }
 
-export default function AntfarmMonitorWidget() {
+interface AntfarmMonitorWidgetProps {
+  onRunSelect?: (run: WorkflowRun) => void;
+}
+
+export default function AntfarmMonitorWidget({ onRunSelect }: AntfarmMonitorWidgetProps = {}) {
   const [status, setStatus] = useState<AntfarmStatus | null>(null);
   const [lastUpdated, setLastUpdated] = useState<Date>(new Date());
   const [loading, setLoading] = useState(true);
@@ -157,9 +161,10 @@ export default function AntfarmMonitorWidget() {
           <h4 className="text-xs font-medium text-zinc-500 dark:text-zinc-400 mb-2">Active Runs</h4>
           <div className="space-y-2">
             {activeRuns.slice(0, 3).map((run) => (
-              <div
+              <button
                 key={run.id}
-                className="flex items-start gap-3 rounded-lg border border-zinc-100 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-800/30 p-3"
+                onClick={() => onRunSelect?.(run)}
+                className="w-full text-left flex items-start gap-3 rounded-lg border border-zinc-100 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-800/30 p-3 hover:bg-zinc-100 dark:hover:bg-zinc-800/50 transition-colors"
               >
                 <div className={`h-2 w-2 mt-1.5 rounded-full ${getStatusDot(run.status)} animate-pulse`}></div>
                 <div className="flex-1 min-w-0">
@@ -169,7 +174,7 @@ export default function AntfarmMonitorWidget() {
                   </p>
                 </div>
                 {getStatusIcon(run.status)}
-              </div>
+              </button>
             ))}
           </div>
         </div>

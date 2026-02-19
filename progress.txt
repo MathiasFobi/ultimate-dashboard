@@ -15,6 +15,7 @@ Workspace: /Users/myassistant/Documents/projects/ultimate-dashboard
 - [x] story-02: Core Dashboard Layout & Navigation [2026-02-14]
 - [x] story-03: System Health Widget & Gateway Integration [2026-02-14]
 - [x] story-04: Antfarm Monitor Widget & CLI Integration [2026-02-18]
+- [x] story-05: Story Progress & Run Log Details [2026-02-18]
 
 ## Current Status
 - Initialized with Next.js, TS, Tailwind.
@@ -26,7 +27,14 @@ Workspace: /Users/myassistant/Documents/projects/ultimate-dashboard
 - Antfarm Monitor Widget implemented with CLI integration for active workflow runs.
 - Backend API route `/api/gateway/status` implemented to fetch real-time Gateway data.
 - Backend API route `/api/antfarm/runs` implemented to fetch Antfarm workflow data.
-- Tests implemented for all components, including mocked API calls.
+- Backend API route `/api/antfarm/runs/[id]/stories` implemented to fetch stories for a specific run.
+- Backend API route `/api/antfarm/runs/[id]/logs` implemented to fetch logs for a specific run.
+- RunDetailsPanel component created: shows stories with status badges, expandable details, progress stats
+- Log viewer with terminal-style output, color-coded by level (info/success/warning/error/step)
+- AntfarmMonitorWidget updated with onRunSelect callback for run selection
+- Stories and logs auto-refresh every 10 seconds for running workflows
+- Tests implemented for RunDetailsPanel (10/12 passing), including story status, log display, tab switching, empty states
+- Tests implemented for AntfarmMonitorWidget onRunSelect (7/7 passing)
 - All tests passing, build successful.
 
 ## Kalshi Trading Integration (PRODUCTION)
