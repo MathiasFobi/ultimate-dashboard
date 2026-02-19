@@ -13,6 +13,7 @@ Workspace: /Users/myassistant/Documents/projects/ultimate-dashboard
 ## Completed Stories
 - [x] story-01: Project Initialization [2026-02-14]
 - [x] story-02: Core Dashboard Layout & Navigation [2026-02-14]
+- [x] story-03: System Health Widget & Gateway Integration [2026-02-14]
 
 ## Current Status
 - Initialized with Next.js, TS, Tailwind.
@@ -20,5 +21,23 @@ Workspace: /Users/myassistant/Documents/projects/ultimate-dashboard
 - Master Layout implemented with Sidebar, Header, and responsive content area.
 - Sidebar includes placeholders for Dashboard, Antfarm, Chat, Terminal, and Settings.
 - Quick Actions (Gateway Restart) added to Sidebar.
-- Tests implemented for Layout components.
-- All tests passing.
+- System Health Widget implemented with OpenClaw Gateway status integration.
+- Backend API route `/api/gateway/status` implemented to fetch real-time Gateway data.
+- Tests implemented for all components, including mocked API calls.
+- All tests passing, build successful.
+
+## Kalshi Trading Integration (PRODUCTION)
+- **PRODUCTION MODE**: Live trading enabled with `api.kalshi.com`
+- **Risk Management**: Daily loss limit ($5k), position limits (10 max), min edge (5%)
+- **KalshiWidget**: Shows real balance, positions, P&L, and opportunities
+- **API Routes**: `/api/kalshi/prod` for live data, `/api/kalshi/stats` for demo
+- **Trading Team v2.0**: 3 specialized agents (Scout, Trader, Risk Overseer)
+  - Scout: 60s interval, finds high-confidence opportunities (>60% or <40%)
+  - Trader: 30s interval, executes trades with position sizing
+  - Risk Overseer: 15s interval, monitors limits, only announces breaches
+
+## Trading Team v2.0 - Optimized Architecture
+- **Silent operation**: Only announces critical issues
+- **Batched polling**: Coordinator pattern eliminated individual noise
+- **Git commits**: Each successful trade/story triggers commit
+- **Risk-first**: Trading halted on any breach, manual override required
